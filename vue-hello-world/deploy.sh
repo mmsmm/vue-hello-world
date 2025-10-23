@@ -16,35 +16,23 @@ if [ ! -f "package.json" ]; then
     exit 1
 fi
 
+# 检查是否安装了 gh-pages
+if ! command -v gh-pages &> /dev/null; then
+    echo "📦 安装 gh-pages 工具..."
+    npm install -g gh-pages
+fi
+
 # 安装依赖
-echo "📦 安装依赖..."
+echo "📦 安装项目依赖..."
 npm ci
 
 # 构建项目
 echo "🔨 构建项目..."
 npm run build
 
-# 进入 dist 目录
-cd dist
-
-# 初始化 git 仓库
-echo "📚 初始化 git 仓库..."
-git init
-git branch -M main
-
-# 添加所有文件
-git add .
-
-# 提交更改
-echo "💾 提交更改..."
-git commit -m "$COMMIT_MESSAGE"
-
-# 推送到 gh-pages 分支
-echo "📤 推送到 GitHub Pages..."
-git push -f https://github.com/mmsmm/vue-hello-world.git main:gh-pages
-
-# 返回上一级目录
-cd ..
+# 使用 gh-pages 部署
+echo "📤 部署到 GitHub Pages..."
+gh-pages --dist dist --remote origin --branch gh-pages --message "$COMMIT_MESSAGE"
 
 echo "✅ 部署完成!"
 echo "🌐 你的网站将在几分钟后部署到: https://mmsmm.github.io/vue-hello-world/"
