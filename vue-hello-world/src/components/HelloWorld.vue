@@ -1,11 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const greeting = ref('Hello World!')
-const subtitle = ref('欢迎来到 Vue3 + Vite 的精彩世界')
-const message = ref('这是一个使用 Vue 3 Composition API + Vite 构建的现代化、美观的 HelloWorld 应用。')
+const greeting = ref('🚀 部署测试成功！')
+const subtitle = ref('GitHub Pages 部署验证页面')
+const message = ref('如果你能看到这个页面，说明部署已经生效！最后更新时间：' + new Date().toLocaleString('zh-CN'))
 const count = ref(0)
 const isDarkTheme = ref(false)
+const currentTime = ref(new Date().toLocaleString('zh-CN'))
 
 const greetings = [
   'Hello World!',
@@ -96,6 +97,9 @@ const createParticle = () => {
 
 onMounted(() => {
   setInterval(createParticle, 1000)
+  setInterval(() => {
+    currentTime.value = new Date().toLocaleString('zh-CN')
+  }, 1000)
 })
 </script>
 
@@ -141,6 +145,13 @@ onMounted(() => {
           <span class="badge vite">Vite</span>
           <span class="badge js">JavaScript</span>
         </div>
+      </div>
+
+      <div class="deployment-info">
+        <h3>🚀 部署信息</h3>
+        <p><strong>当前时间：</strong>{{ currentTime }}</p>
+        <p><strong>部署状态：</strong><span class="status-success">✅ 成功</span></p>
+        <p><strong>访问地址：</strong><a href="https://mmsmm.github.io/vue-hello-world/" target="_blank">GitHub Pages</a></p>
       </div>
     </div>
   </div>
@@ -407,6 +418,42 @@ onMounted(() => {
 .badge.js {
   background: #f7df1e;
   color: #323330;
+}
+
+.deployment-info {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border-radius: 15px;
+  padding: 30px;
+  margin-top: 30px;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 2.1s forwards;
+}
+
+.deployment-info h3 {
+  color: #16a34a;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.deployment-info p {
+  color: #15803d;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.status-success {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.deployment-info a {
+  color: #16a34a;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.deployment-info a:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {
